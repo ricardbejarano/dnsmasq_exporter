@@ -1,0 +1,21 @@
+FROM golang:alpine AS build
+
+COPY dnsmasq_exporter.go /go/
+
+RUN apk add git && \
+    go get \
+      github.com/miekg/dns \
+      github.com/prometheus/client_golang/prometheus && \
+    go build dnsmasq_exporter.go
+
+
+FROM scratch
+
+COPY --from=build /lib/ld-musl-x86_64.so.1 /lib/
+COPY --from=build /go/dnsmasq_exporter /
+
+COPY rootfs /
+
+USER dnsmasq:dnsmasq
+EXPOSE 9153/tcp
+ENTRYPOINT ["/dnsmasq_exporter"]
