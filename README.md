@@ -31,7 +31,7 @@ All configuration is done through environment variables:
 
 ### Adding to Prometheus
 
-Add the following to your Prometheus configuration file:
+Add the following to your Prometheus configuration:
 
 ```yaml
 scrape_configs:
