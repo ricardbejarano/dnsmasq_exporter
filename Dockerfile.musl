@@ -16,6 +16,6 @@ COPY --from=build /go/dnsmasq_exporter /
 
 COPY rootfs /
 
-USER dnsmasq:dnsmasq
+USER 100:100
 EXPOSE 9153/tcp
 ENTRYPOINT ["/dnsmasq_exporter"]
