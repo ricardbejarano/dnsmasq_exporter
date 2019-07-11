@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	servers = strings.Split(envString("DNSMASQ_SERVERS", ""), ",")
+	servers = strings.Split(envString("DNSMASQ_SERVERS", "127.0.0.1:53"), ",")
 	address = envString("LISTEN_ADDR", "0.0.0.0") + ":" + envString("LISTEN_PORT", "9153")
 
 	gauges = map[string]*prometheus.GaugeVec{

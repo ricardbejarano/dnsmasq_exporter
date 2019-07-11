@@ -25,7 +25,7 @@ If successful, you'll find your `dnsmasq_exporter` binary on your working direct
 
 All configuration is done through environment variables:
 
-- `DNSMASQ_SERVERS`: comma-separated list of the `<address>:<port>` pairs of the Dnsmasq servers
+- `DNSMASQ_SERVERS`: *(default: `127.0.0.1:53`)* comma-separated list of the `<address>:<port>` pairs of the Dnsmasq servers
 - `LISTEN_ADDR`: *(default: `0.0.0.0`)*, bind address for dnsmasq_exporter
 - `LISTEN_PORT`: *(default: `9153`)*, bind port for dnsmasq_exporter
 
