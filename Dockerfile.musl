@@ -1,20 +1,22 @@
-FROM golang:alpine AS build
+FROM golang:1.12.7-alpine AS build
 
-COPY dnsmasq_exporter.go /go/
+COPY dnsmasq_exporter /go/
 
 RUN apk add git && \
     go get \
       github.com/miekg/dns \
       github.com/prometheus/client_golang/prometheus && \
-    go build dnsmasq_exporter.go
+    CGO_ENABLED=0 go build dnsmasq_exporter.go && \
+    echo "nogroup:*:100:nobody" > /tmp/group && \
+    echo "nobody:*:100:100:::" > /tmp/passwd
 
 
 FROM scratch
 
-COPY --from=build /lib/ld-musl-x86_64.so.1 /lib/
-COPY --from=build /go/dnsmasq_exporter /
-
-COPY rootfs /
+COPY --from=build --chown=100:100 /go/dnsmasq_exporter /
+COPY --from=build --chown=100:100 /tmp/group \
+                                  /tmp/passwd \
+                                  /etc/
 
 USER 100:100
 EXPOSE 9153/tcp
