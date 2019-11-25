@@ -12,20 +12,20 @@ Requires **Dnsmasq 2.69 or above**!
 
 Available on [Docker Hub](https://hub.docker.com) as [`ricardbejarano/dnsmasq_exporter`](https://hub.docker.com/r/ricardbejarano/dnsmasq_exporter):
 
-- [`1.2-glibc`, `1.2`, `glibc`, `master`, `latest` *(Dockerfile.glibc)*](https://github.com/ricardbejarano/dnsmasq_exporter/blob/master/Dockerfile.glibc)
-- [`1.2-musl`, `musl` *(Dockerfile.musl)*](https://github.com/ricardbejarano/dnsmasq_exporter/blob/master/Dockerfile.musl)
+- [`1.2-glibc`, `1.2`, `glibc`, `master`, `latest` *(Dockerfile.glibc)*](https://github.com/ricardbejarano/dnsmasq_exporter/blob/master/Dockerfile.glibc) (about `13.2MB`)
+- [`1.2-musl`, `musl` *(Dockerfile.musl)*](https://github.com/ricardbejarano/dnsmasq_exporter/blob/master/Dockerfile.musl) (about `13.2MB`)
 
 ### Quay
 
 Available on [Quay](https://quay.io) as:
 
-- [`quay.io/ricardbejarano/dnsmasq_exporter-glibc`](https://quay.io/repository/ricardbejarano/dnsmasq_exporter-glibc), tags: [`1.2`, `master`, `latest` *(Dockerfile.glibc)*](https://github.com/ricardbejarano/dnsmasq_exporter/blob/master/Dockerfile.glibc)
-- [`quay.io/ricardbejarano/dnsmasq_exporter-musl`](https://quay.io/repository/ricardbejarano/dnsmasq_exporter-musl), tags: [`1.2`, `master`, `latest` *(Dockerfile.musl)*](https://github.com/ricardbejarano/dnsmasq_exporter/blob/master/Dockerfile.musl)
+- [`quay.io/ricardbejarano/dnsmasq_exporter-glibc`](https://quay.io/repository/ricardbejarano/dnsmasq_exporter-glibc), tags: [`1.2`, `master`, `latest` *(Dockerfile.glibc)*](https://github.com/ricardbejarano/dnsmasq_exporter/blob/master/Dockerfile.glibc) (about `13.2MB`)
+- [`quay.io/ricardbejarano/dnsmasq_exporter-musl`](https://quay.io/repository/ricardbejarano/dnsmasq_exporter-musl), tags: [`1.2`, `master`, `latest` *(Dockerfile.musl)*](https://github.com/ricardbejarano/dnsmasq_exporter/blob/master/Dockerfile.musl) (about `13.2MB`)
 
 
 ## Features
 
-* Super tiny (about `13.2MB`)
+* Super tiny (see [Tags](#tags))
 * Compiled from source during build time
 * Built `FROM scratch`, with zero bloat (see [Filesystem](#filesystem))
 * Reduced attack surface (no shell, no UNIX tools, no package manager...)
