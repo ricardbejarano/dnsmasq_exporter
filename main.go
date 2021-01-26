@@ -14,7 +14,7 @@ import (
 
 var (
 	servers = strings.Split(env.String("DNSMASQ_SERVERS", "127.0.0.1:53"), ",")
-	address = env.String("LISTEN_ADDR", "0.0.0.0") + ":" + env.String("LISTEN_PORT", "9153")
+	address = env.String("EXPORTER_LISTEN_ADDR", "127.0.0.1:9153")
 
 	gauges = map[string]*prometheus.GaugeVec{
 		"cachesize.bind.": prometheus.NewGaugeVec(prometheus.GaugeOpts{

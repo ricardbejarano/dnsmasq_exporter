@@ -17,8 +17,7 @@ Metrics are obtained by querying Dnsmasq directly over its DNS endpoint.
 * Requires **Dnsmasq 2.69 or above**!
 * **Tune your configuration**. All configuration is done through *environment variables*:
   * `DNSMASQ_SERVERS`: *(defaults to `127.0.0.1:53`)* comma-separated list of `<address>:<port>` pairs of Dnsmasq servers' addresses
-  * `LISTEN_ADDR`: *(defaults to `0.0.0.0`)*, bind address for `dnsmasq_exporter`
-  * `LISTEN_PORT`: *(defaults to `9153`)*, bind port for `dnsmasq_exporter`
+  * `EXPORTER_LISTEN_ADDR`: *(defaults to `127.0.0.1:9153`)*, bind address for `dnsmasq_exporter`
 
 ## With the prebuilt container image
 

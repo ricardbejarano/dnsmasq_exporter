@@ -16,5 +16,7 @@ FROM scratch
 
 COPY --from=build --chown=10000:10000 /rootfs /
 
+ENV EXPORTER_LISTEN_ADDR="0.0.0.0:9153"
 USER 10000:10000
+EXPOSE 9153/tcp
 ENTRYPOINT ["/bin/dnsmasq_exporter"]
