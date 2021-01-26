@@ -3,18 +3,18 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 
 	"github.com/miekg/dns"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/usewormhol/pkg/env"
 )
 
 var (
-	servers = strings.Split(envString("DNSMASQ_SERVERS", "127.0.0.1:53"), ",")
-	address = envString("LISTEN_ADDR", "0.0.0.0") + ":" + envString("LISTEN_PORT", "9153")
+	servers = strings.Split(env.String("DNSMASQ_SERVERS", "127.0.0.1:53"), ",")
+	address = env.String("LISTEN_ADDR", "0.0.0.0") + ":" + env.String("LISTEN_PORT", "9153")
 
 	gauges = map[string]*prometheus.GaugeVec{
 		"cachesize.bind.": prometheus.NewGaugeVec(prometheus.GaugeOpts{
@@ -97,11 +97,4 @@ func main() {
 	log.Printf("dnsmasq servers %v\n", servers)
 	log.Printf("metrics at http://%v/metrics\n", address)
 	log.Fatal(http.ListenAndServe(address, nil))
-}
-
-func envString(key string, fallback string) string {
-	if value := os.Getenv(key); len(value) > 0 {
-		return value
-	}
-	return fallback
 }
