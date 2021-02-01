@@ -9,12 +9,12 @@ import (
 	"github.com/miekg/dns"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/usewormhol/pkg/env"
+	"github.com/usewormhol/env"
 )
 
 var (
-	servers = strings.Split(env.String("DNSMASQ_SERVERS", "127.0.0.1:53"), ",")
-	address = env.String("EXPORTER_LISTEN_ADDR", "127.0.0.1:9153")
+	servers = strings.Split(env.String("DNSMASQ_SERVERS", "127.0.0.1:53", env.Optional), ",")
+	address = env.String("EXPORTER_LISTEN_ADDR", "127.0.0.1:9153", env.Optional)
 
 	gauges = map[string]*prometheus.GaugeVec{
 		"cachesize.bind.": prometheus.NewGaugeVec(prometheus.GaugeOpts{
