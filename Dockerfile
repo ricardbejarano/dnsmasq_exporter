@@ -1,15 +1,21 @@
-FROM golang:1-alpine AS build
+FROM docker.io/golang:1 AS build
 
-COPY . /build
-RUN apk add make && \
-    cd /build && \
+RUN mkdir -p /rootfs/etc
+
+RUN echo "nobody:*:10000:nobody" > /rootfs/etc/group \
+    && echo "nobody:*:10000:10000:::" > /rootfs/etc/passwd
+
+ARG DEBIAN_FRONTEND="noninteractive"
+RUN apt-get update
+
+RUN apt-get install --yes --no-install-recommends \
       make
 
-RUN mkdir -p /rootfs/bin && \
-      cp /build/bin/dnsmasq_exporter /rootfs/bin/ && \
-    mkdir -p /rootfs/etc && \
-      echo "nogroup:*:10000:nobody" > /rootfs/etc/group && \
-      echo "nobody:*:10000:10000:::" > /rootfs/etc/passwd
+COPY . /build
+RUN cd /build \
+    && make build \
+    && mkdir -p /rootfs \
+    && cp -r /build/bin /rootfs/
 
 
 FROM scratch
@@ -17,6 +23,7 @@ FROM scratch
 COPY --from=build --chown=10000:10000 /rootfs /
 
 ENV EXPORTER_LISTEN_ADDR="0.0.0.0:9153"
-USER 10000:10000
-EXPOSE 9153/tcp
+USER nobody:nobody
+WORKDIR /
+EXPOSE 9153/TCP
 ENTRYPOINT ["/bin/dnsmasq_exporter"]
