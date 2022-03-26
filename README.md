@@ -1,7 +1,7 @@
 <div align="center">
   <p><img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/325/fire_1f525.png" width="100px"></p>
   <h1>dnsmasq_exporter</h1>
-  <p>Prometheus metrics exporter for <a href="https://thekelleys.org.uk/dnsmasq/doc.html">Dnsmasq</a></p>
+  <p>Prometheus exporter for <a href="https://thekelleys.org.uk/dnsmasq/doc.html">Dnsmasq</a></p>
   <code>docker pull quay.io/ricardbejarano/dnsmasq_exporter</code>
 </div>
 
