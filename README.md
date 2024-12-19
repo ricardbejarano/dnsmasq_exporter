@@ -21,13 +21,13 @@
 
 Available on Docker Hub as [`docker.io/ricardbejarano/dnsmasq_exporter`](https://hub.docker.com/r/ricardbejarano/dnsmasq_exporter):
 
-- [`1.4.3`, `latest` *(Dockerfile)*](Dockerfile)
+- [`1.4.5`, `latest` *(Dockerfile)*](Dockerfile)
 
 #### RedHat Quay
 
 Available on RedHat Quay as [`quay.io/ricardbejarano/dnsmasq_exporter`](https://quay.io/repository/ricardbejarano/dnsmasq_exporter):
 
-- [`1.4.3`, `latest` *(Dockerfile)*](Dockerfile)
+- [`1.4.5`, `latest` *(Dockerfile)*](Dockerfile)
 
 ### Building the container image yourself
 
