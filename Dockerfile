@@ -5,15 +5,9 @@ RUN mkdir -p /rootfs/etc
 RUN echo "nobody:*:10000:nobody" > /rootfs/etc/group \
     && echo "nobody:*:10000:10000:::" > /rootfs/etc/passwd
 
-ARG DEBIAN_FRONTEND="noninteractive"
-RUN apt-get update
-
-RUN apt-get install --yes --no-install-recommends \
-      make
-
 COPY . /build
 RUN cd /build \
-    && make build \
+    && CGO_ENABLED=0 go build -o bin/ . \
     && mkdir -p /rootfs \
     && cp -r /build/bin /rootfs/
 

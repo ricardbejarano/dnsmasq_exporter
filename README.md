@@ -39,7 +39,7 @@ docker run -it -p 9153:9153 dnsmasq_exporter
 ### Building the binary yourself
 
 ```bash
-make
+go build -o bin/ .
 ./bin/dnsmasq_exporter
 ```
 
