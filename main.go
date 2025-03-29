@@ -52,43 +52,44 @@ func main() {
 	}
 
 	http.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request) {
-		questions := &dns.Msg{
-			MsgHdr: dns.MsgHdr{
-				Id:               dns.Id(),
-				RecursionDesired: true,
-			},
-			Question: []dns.Question{
+		for _, server := range servers {
+			for _, question := range []dns.Question{
 				{"cachesize.bind.", dns.TypeTXT, dns.ClassCHAOS},
 				{"insertions.bind.", dns.TypeTXT, dns.ClassCHAOS},
 				{"evictions.bind.", dns.TypeTXT, dns.ClassCHAOS},
 				{"misses.bind.", dns.TypeTXT, dns.ClassCHAOS},
 				{"hits.bind.", dns.TypeTXT, dns.ClassCHAOS},
 				{"auth.bind.", dns.TypeTXT, dns.ClassCHAOS},
-			},
-		}
-		for _, server := range servers {
-			answers, _, err := client.Exchange(questions, server)
-			if err != nil {
-				log.Printf("server (%v) query error: %v\n", server, err)
-				continue
-			}
-			for _, answer := range answers.Answer {
-				txt, ok := answer.(*dns.TXT)
-				if !ok {
-					log.Printf("server (%v) answer parsing error: invalid answer type\n", server)
-					continue
-				}
-				gauge, ok := gauges[txt.Hdr.Name]
-				if !ok {
-					log.Printf("server (%v) answer parsing error: invalid answer name\n", server)
-					continue
-				}
-				value, err := strconv.ParseFloat(txt.Txt[0], 64)
+			} {
+				answers, _, err := client.Exchange(&dns.Msg{
+					MsgHdr: dns.MsgHdr{
+						Id:               dns.Id(),
+						RecursionDesired: true,
+					},
+					Question: []dns.Question{question},
+				}, server)
 				if err != nil {
-					log.Printf("server (%v) answer parsing error: invalid answer value\n", server)
+					log.Printf("server (%v) query error: %v\n", server, err)
 					continue
 				}
-				gauge.With(prometheus.Labels{"instance": server}).Set(value)
+				for _, answer := range answers.Answer {
+					txt, ok := answer.(*dns.TXT)
+					if !ok {
+						log.Printf("server (%v) answer parsing error: invalid answer type\n", server)
+						continue
+					}
+					gauge, ok := gauges[txt.Hdr.Name]
+					if !ok {
+						log.Printf("server (%v) answer parsing error: invalid answer name\n", server)
+						continue
+					}
+					value, err := strconv.ParseFloat(txt.Txt[0], 64)
+					if err != nil {
+						log.Printf("server (%v) answer parsing error: invalid answer value\n", server)
+						continue
+					}
+					gauge.With(prometheus.Labels{"instance": server}).Set(value)
+				}
 			}
 		}
 		promhttp.Handler().ServeHTTP(w, r)
